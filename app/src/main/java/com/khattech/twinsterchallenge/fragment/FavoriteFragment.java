@@ -41,7 +41,7 @@ public class FavoriteFragment extends Fragment {
 
         Log.d(TAG, "onCreateView: "+movies);
 
-        movieAdapter = new MovieAdapter(getActivity(), movies);
+        movieAdapter = new MovieAdapter(getActivity(), movies,"FavoriteFragment");
         rvMovies.setAdapter(movieAdapter);
         return view;
     }

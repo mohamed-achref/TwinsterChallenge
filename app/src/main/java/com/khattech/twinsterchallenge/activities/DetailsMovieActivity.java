@@ -76,6 +76,13 @@ public class DetailsMovieActivity extends AppCompatActivity {
             }
         });
 
+        moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+        if (moviesFav != null)
+            if (moviesFav.contains(movie)) {
+                movie.setFavourite(true);
+                btnLike.setBackgroundResource(R.drawable.ic_liked);
+            }
+
         btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,8 +91,6 @@ public class DetailsMovieActivity extends AppCompatActivity {
                 if (movie.isFavourite()) {
                     if (Hawk.get(Constant.PREFS_FAVORITE_MOVIE) == null) {
                         moviesFav = new ArrayList<>();
-                    } else {
-                        moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
                     }
 
                     moviesFav.add(movie);
@@ -93,7 +98,6 @@ public class DetailsMovieActivity extends AppCompatActivity {
 
                     btnLike.setBackgroundResource(R.drawable.ic_liked);
                 } else {
-                    moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
                     moviesFav.remove(movie);
                     Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
 
@@ -129,7 +133,7 @@ public class DetailsMovieActivity extends AppCompatActivity {
                     details = details + movieDetails.getRelease_date().substring(0, 4);
 
                 if (movieDetails.getGenres().size() > 0)
-                    details = details + " | " + genreString.substring(0, genreString.length() - 1);
+                    details = details + " | " + genreString.substring(0, genreString.length() - 2);
 
                 if (movie.getVote_average() != null)
                     details = details + " | " + movie.getVote_average();
@@ -145,9 +149,11 @@ public class DetailsMovieActivity extends AppCompatActivity {
             }
         });
     }
+
     static public void shareImage(String url, final Context context) {
         Picasso.get().load(url).into(new Target() {
-            @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("image/*");
                 i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap, context));
@@ -165,10 +171,11 @@ public class DetailsMovieActivity extends AppCompatActivity {
             }
         });
     }
+
     static public Uri getLocalBitmapUri(Bitmap bmp, Context context) {
         Uri bmpUri = null;
         try {
-            File file =  new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
             FileOutputStream out = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();

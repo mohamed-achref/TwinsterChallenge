@@ -30,13 +30,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
 
     private ArrayList<Movie> itemsList;
     private Context mContext;
+    private String parentFrag;
     private int mLowestPosition = -1;
 
     private ArrayList<Movie> moviesFav;
 
-    public MovieAdapter(Context context, ArrayList<Movie> itemsList) {
+    public MovieAdapter(Context context, ArrayList<Movie> itemsList, String parentFrag) {
         this.itemsList = itemsList;
         this.mContext = context;
+        this.parentFrag = parentFrag;
     }
 
     @NonNull
@@ -104,6 +106,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
                     Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
 
                     holder.btnLike.setBackgroundResource(R.drawable.ic_like);
+
+                    if (parentFrag.equals("FavoriteFragment")){
+                        itemsList.remove(i);
+                        notifyItemRemoved(i);
+                    }
                 }
 
             }

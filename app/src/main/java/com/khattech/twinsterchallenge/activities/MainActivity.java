@@ -3,6 +3,7 @@ package com.khattech.twinsterchallenge.activities;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +26,7 @@ import com.khattech.twinsterchallenge.net.Constant;
 import com.orhanobut.hawk.Hawk;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "";
     private AppBarConfiguration mAppBarConfiguration;
 
     private DrawerLayout drawer;
@@ -41,12 +42,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (Hawk.get(Constant.PREFS_USER_CONNECTED) == null) {
+            Log.d(TAG, "onCreate: if");
+            user = new User("ic_user", "Mohamed Achref KHATTECHE", "Mohamedachref.khatteche@gmail.com");
+            Hawk.put(Constant.PREFS_USER_CONNECTED, user);
+        }else{
+            Log.d(TAG, "onCreate: else");
+            Hawk.get(Constant.PREFS_USER_CONNECTED);
+        }
 
-        user = new User("ic_user", "Mohamed Achref KHATTECHE", "Mohamedachref.khatteche@gmail.com");
-        Hawk.put(Constant.PREFS_USER_CONNECTED, user);
 
         configureNavigationDrawer();
-
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.const_content_main, new HomeFragment())

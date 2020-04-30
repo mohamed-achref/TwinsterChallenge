@@ -26,12 +26,11 @@ public class HomeFragment extends Fragment {
         Log.d("HomeFragment", "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getParentFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getChildFragmentManager());
         ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
 
         return view;
     }

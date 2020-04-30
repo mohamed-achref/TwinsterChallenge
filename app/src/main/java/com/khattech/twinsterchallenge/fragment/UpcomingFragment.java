@@ -56,7 +56,7 @@ public class UpcomingFragment extends Fragment {
             public void onSuccess(Object response) {
                 movies = (ArrayList<Movie>) response;
                 Log.d(TAG, "onSuccess: " + movies);
-                movieAdapter = new MovieAdapter(getActivity(), movies);
+                movieAdapter = new MovieAdapter(getActivity(), movies,"UpcomingFragment");
                 rvMovies.setAdapter(movieAdapter);
             }
 

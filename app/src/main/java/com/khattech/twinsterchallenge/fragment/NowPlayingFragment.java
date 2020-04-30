@@ -54,7 +54,7 @@ public class NowPlayingFragment extends Fragment {
                 movies = (ArrayList<Movie>) response;
                 Log.d(TAG, "onSuccess: " + movies);
 
-                movieAdapter = new MovieAdapter(getActivity(), movies);
+                movieAdapter = new MovieAdapter(getActivity(), movies,"NowPlayingFragment");
                 rvMovies.setAdapter(movieAdapter);
             }
 

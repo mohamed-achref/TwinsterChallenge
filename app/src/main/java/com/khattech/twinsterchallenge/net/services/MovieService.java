@@ -32,7 +32,7 @@ public class MovieService {
     public void getMoviesNowPlaying(final OnCallback callback) {
         final String TAG = "getMoviesNowPlaying";
         String url;
-        if (Locale.getDefault().equals("de_DE"))
+        if (Locale.getDefault().toString().equals("de_DE"))
             url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
         else
             url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
@@ -84,11 +84,11 @@ public class MovieService {
         final String TAG = "getMoviesUpcoming";
         Log.d(TAG, "getMoviesUpcoming: " + Locale.getDefault());
         String url;
-        if (Locale.getDefault().equals("de_DE"))
+        if (Locale.getDefault().toString().equals("de_DE"))
             url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
         else
             url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
-            Log.d(TAG, "getMovies: " + url);
+        Log.d(TAG, "getMovies: " + url);
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.GET, url, new Response.Listener<NetworkResponse>() {
             @Override
@@ -133,9 +133,14 @@ public class MovieService {
 
     public void getDetailsMovies(String id, final OnCallback callback) {
         final String TAG = "getDetailsMovies";
-//        https://api.themoviedb.org/3/movie/522627?api_key=e16f9ec421f01f05db45a6d069d84d56&language=en-US
 
-        String url = Constant.BASE_URL + id + "?api_key=" + Constant.API_TOKEN + "&language=en-US";
+        String url;
+        if (Locale.getDefault().toString().equals("de_DE"))
+            url = Constant.BASE_URL + id + "?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
+        else
+            url = Constant.BASE_URL + id + "?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
+
+
         Log.d(TAG, "getMovies: " + url);
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.GET, url, new Response.Listener<NetworkResponse>() {

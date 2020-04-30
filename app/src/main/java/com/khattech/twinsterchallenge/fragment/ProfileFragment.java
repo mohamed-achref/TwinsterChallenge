@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
         final EditText edName = v.findViewById(R.id.edName);
         final EditText edEmail = v.findViewById(R.id.edEmail);
 
-        Bitmap iconPlus = BitmapFactory.decodeResource(getResources(), R.drawable.ic_user); 
+        Bitmap iconPlus = BitmapFactory.decodeResource(getResources(), R.drawable.ic_user);
         imageView.setImageBitmap(iconPlus);
 
         user = Hawk.get(Constant.PREFS_USER_CONNECTED);
