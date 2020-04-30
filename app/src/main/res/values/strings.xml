@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Twinster Challenge</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+
+    <string name="tab_text_1">Now Playing</string>
+    <string name="tab_text_2">Upcoming</string>
+
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_profile">Profile</string>
+    <string name="update">Update</string>
+    <string name="message_profile">Your profile has been updated</string>
+    <string name="message_share">Enjoy this movie</string>
+
+</resources>

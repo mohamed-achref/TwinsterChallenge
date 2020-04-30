@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Twinster Challenge</string>
+
+    <string name="menu_home">Home</string>
+
+    <string name="tab_text_1">Läuft gerade</string>
+    <string name="tab_text_2">Bevorstehende</string>
+
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="menu_favorite">Lieblings</string>
+    <string name="menu_profile">Profil</string>
+    <string name="update">Aktualisieren</string>
+    <string name="message_profile">Ihr Profil wurde aktualisiert</string>
+    <string name="message_share">Genieße diesen Film</string>
+
+</resources>
