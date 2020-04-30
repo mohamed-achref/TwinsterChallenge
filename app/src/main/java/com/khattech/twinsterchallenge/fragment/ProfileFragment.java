@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.navigation.NavigationView;
 import com.khattech.twinsterchallenge.R;
 import com.khattech.twinsterchallenge.models.User;
 import com.khattech.twinsterchallenge.net.Constant;
@@ -37,8 +35,7 @@ public class ProfileFragment extends Fragment {
         final EditText edName = v.findViewById(R.id.edName);
         final EditText edEmail = v.findViewById(R.id.edEmail);
 
-        Bitmap iconPlus = BitmapFactory.decodeResource(getResources(), R.drawable.ic_user);
-//        Bitmap imagePlus = Utils.getRoundedCornerBitmap(iconPlus, Utils.dpToPx(20, this));
+        Bitmap iconPlus = BitmapFactory.decodeResource(getResources(), R.drawable.ic_user); 
         imageView.setImageBitmap(iconPlus);
 
         user = Hawk.get(Constant.PREFS_USER_CONNECTED);
@@ -56,7 +53,6 @@ public class ProfileFragment extends Fragment {
 
                 String message = getActivity().getResources().getString(R.string.message_profile);
                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
             }
         });
 

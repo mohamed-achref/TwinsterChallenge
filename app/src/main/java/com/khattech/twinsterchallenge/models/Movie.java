@@ -1,6 +1,7 @@
 package com.khattech.twinsterchallenge.models;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Mohamed Achref on 4/29/20.
@@ -103,5 +104,18 @@ public class Movie {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return id.equals(movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

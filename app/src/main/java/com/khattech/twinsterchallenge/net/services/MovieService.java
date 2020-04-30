@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Mohamed Achref on 3/6/20.
@@ -30,8 +31,12 @@ public class MovieService {
 
     public void getMoviesNowPlaying(final OnCallback callback) {
         final String TAG = "getMoviesNowPlaying";
+        String url;
+        if (Locale.getDefault().equals("de_DE"))
+            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
+        else
+            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
 
-        String url = Constant.BASE_URL + "now_playing?api_key=e16f9ec421f01f05db45a6d069d84d56&language=en-US&page=1";
         Log.d(TAG, "getMovies: " + url);
 
 
@@ -77,9 +82,13 @@ public class MovieService {
 
     public void getMoviesUpcoming(final OnCallback callback) {
         final String TAG = "getMoviesUpcoming";
-
-        String url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
-        Log.d(TAG, "getMovies: " + url);
+        Log.d(TAG, "getMoviesUpcoming: " + Locale.getDefault());
+        String url;
+        if (Locale.getDefault().equals("de_DE"))
+            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
+        else
+            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
+            Log.d(TAG, "getMovies: " + url);
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.GET, url, new Response.Listener<NetworkResponse>() {
             @Override

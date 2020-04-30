@@ -53,59 +53,61 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
 
 //        if (i > mLowestPosition) {
 //            if (movie != null) {
-                moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+        moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
 
-                Log.d(TAG, "onBindViewHolder: "+moviesFav);
-                Log.d(TAG, "onBindViewHolder: "+moviesFav.contains(movie));
-                if (moviesFav != null && moviesFav.contains(movie)) {
+        Log.d(TAG, "onBindViewHolder: " + moviesFav);
+        Log.d(TAG, "onBindViewHolder: " + moviesFav.contains(movie));
+
+        if (moviesFav != null && moviesFav.contains(movie)) {
+            movie.setFavourite(true);
+            Log.d(TAG, "onBindViewHolder: != null ");
+            holder.btnLike.setBackgroundResource(R.drawable.ic_liked);
+        }
+        Glide.with(mContext)
+                .load(Constant.URL_IMAGE + movie.getPoster_path())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.ic_placeholder)
+                .into(holder.itemImage);
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: prod " + movie);
+
+                Hawk.put(Constant.PREFS_MOVIE, movie);
+                Intent intent = new Intent(mContext, DetailsMovieActivity.class);
+
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                movie.setFavourite(!movie.isFavourite());
+
+                if (movie.isFavourite()) {
+                    if (Hawk.get(Constant.PREFS_FAVORITE_MOVIE) == null) {
+                        moviesFav = new ArrayList<>();
+                    } else {
+                        moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+                    }
+
+                    moviesFav.add(movie);
+                    Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
+
                     holder.btnLike.setBackgroundResource(R.drawable.ic_liked);
+                } else {
+                    moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+                    moviesFav.remove(movie);
+                    Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
+
+                    holder.btnLike.setBackgroundResource(R.drawable.ic_like);
                 }
-                Glide.with(mContext)
-                        .load(Constant.URL_IMAGE + movie.getPoster_path())
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.ic_placeholder)
-                        .into(holder.itemImage);
 
-
-
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "onClick: prod " + movie);
-
-                        Hawk.put(Constant.PREFS_MOVIE, movie);
-                        Intent intent = new Intent(mContext, DetailsMovieActivity.class);
-
-                        mContext.startActivity(intent);
-                    }
-                });
-
-                holder.btnLike.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        movie.setFavourite(!movie.isFavourite());
-
-                        if (movie.isFavourite()) {
-                            if (Hawk.get(Constant.PREFS_FAVORITE_MOVIE) == null) {
-                                moviesFav = new ArrayList<>();
-                            } else {
-                                moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
-                            }
-
-                            moviesFav.add(movie);
-                            Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
-
-                            holder.btnLike.setBackgroundResource(R.drawable.ic_liked);
-                        } else {
-                            moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
-                            moviesFav.remove(movie);
-                            Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
-
-                            holder.btnLike.setBackgroundResource(R.drawable.ic_like);
-                        }
-
-                    }
-                });
+            }
+        });
 
 //            }
 

@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        
+
 
         return view;
     }

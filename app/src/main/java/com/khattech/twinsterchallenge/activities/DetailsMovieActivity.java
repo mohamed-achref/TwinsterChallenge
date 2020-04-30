@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import com.squareup.picasso.Target;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DetailsMovieActivity extends AppCompatActivity {
 
@@ -41,6 +43,8 @@ public class DetailsMovieActivity extends AppCompatActivity {
 
     private ImageView image;
     private FrameLayout icRightButton;
+    private Button btnLike;
+    private ArrayList<Movie> moviesFav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class DetailsMovieActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         image = findViewById(R.id.image);
         icRightButton = findViewById(R.id.icRightButton);
+        btnLike = findViewById(R.id.btnLike);
 
         final Movie movie = Hawk.get(Constant.PREFS_MOVIE);
 
@@ -68,6 +73,33 @@ public class DetailsMovieActivity extends AppCompatActivity {
                 startActivity(shareIntent);
 
 //                shareImage(Constant.URL_IMAGE + movie.getPoster_path(),DetailsMovieActivity.this);
+            }
+        });
+
+        btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                movie.setFavourite(!movie.isFavourite());
+
+                if (movie.isFavourite()) {
+                    if (Hawk.get(Constant.PREFS_FAVORITE_MOVIE) == null) {
+                        moviesFav = new ArrayList<>();
+                    } else {
+                        moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+                    }
+
+                    moviesFav.add(movie);
+                    Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
+
+                    btnLike.setBackgroundResource(R.drawable.ic_liked);
+                } else {
+                    moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+                    moviesFav.remove(movie);
+                    Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
+
+                    btnLike.setBackgroundResource(R.drawable.ic_like);
+                }
+
             }
         });
 
