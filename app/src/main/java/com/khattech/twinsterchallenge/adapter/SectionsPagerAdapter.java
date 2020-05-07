@@ -1,15 +1,12 @@
 package com.khattech.twinsterchallenge.adapter;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.khattech.twinsterchallenge.R;
 import com.khattech.twinsterchallenge.fragment.NowPlayingFragment;
@@ -27,7 +24,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private FragmentManager fm;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
+        super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+//        notifyDataSetChanged();
         mContext = context;
     }
 

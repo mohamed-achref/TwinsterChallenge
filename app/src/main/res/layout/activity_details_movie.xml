@@ -10,7 +10,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/white"
         android:translationZ="1dp">
 
         <FrameLayout
@@ -76,102 +75,93 @@
         android:layout_below="@id/toolbar"
         android:background="@color/white">
 
+
         <RelativeLayout
+            android:id="@+id/rlContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
-            <RelativeLayout
-                android:id="@+id/rlContent"
+            <ImageView
+                android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_placeholder" />
 
-
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_placeholder" />
-
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/image"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_marginTop="8dp"
-                    android:id="@+id/linear2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/image"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/frameLike"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvTitleMovie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:orientation="vertical">
+                        android:text="Evening Dress"
+                        android:textColor="@android:color/black"
+                        android:textSize="22sp" />
 
-                        <TextView
-                            android:id="@+id/tvTitleMovie"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Evening Dress"
-                            android:textColor="@android:color/black"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:id="@+id/tvDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Dorothy Perkins"
-                            android:textColor="#A5A5A5"
-                            android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tvDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dorothy Perkins"
+                        android:textColor="#A5A5A5"
+                        android:textSize="12sp" />
 
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-
-                        android:layout_gravity="center_vertical"
-                        android:gravity="end"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:id="@+id/frameLike"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/bg_image_user_shadow"
-                            android:elevation="2dp">
-
-                            <Button
-                                android:id="@+id/btnLike"
-                                android:layout_width="26dp"
-                                android:layout_height="26dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/ic_like"
-                                android:scaleType="fitCenter" />
-                        </FrameLayout>
-                    </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/linear2"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:ems="10"
-                    android:text="One and done has never been truer than with this stroller that adapts to your growing child. For infants, you can click a Graco infant car seat directly onto the lightweight stroller frame or use the included seat in the fully reclined, bassinet position. Later, adjust the seat to one of four upright positions. Babies four to 35 pounds can fit in the car seat, while the stroller works for kids up to 50 pounds."
-                    android:textColor="@android:color/black" />
 
-            </RelativeLayout>
+                <FrameLayout
+                    android:id="@+id/frameLike"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_image_user_shadow"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/btnLike"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_like"
+                        android:scaleType="fitCenter" />
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear2"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:text="One and done has never been truer than with this stroller that adapts to your growing child. For infants, you can click a Graco infant car seat directly onto the lightweight stroller frame or use the included seat in the fully reclined, bassinet position. Later, adjust the seat to one of four upright positions. Babies four to 35 pounds can fit in the car seat, while the stroller works for kids up to 50 pounds."
+                android:textColor="@android:color/black" />
+
         </RelativeLayout>
     </ScrollView>
 

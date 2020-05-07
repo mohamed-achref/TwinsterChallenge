@@ -14,6 +14,7 @@ import com.khattech.twinsterchallenge.net.callback.OnCallback;
 import com.khattech.twinsterchallenge.net.utils.ArtistApp;
 import com.khattech.twinsterchallenge.net.utils.GsonUtils;
 import com.khattech.twinsterchallenge.net.utils.VolleyMultipartRequest;
+import com.orhanobut.hawk.Hawk;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,13 +30,17 @@ import java.util.Locale;
 @SuppressLint("LongLogTag")
 public class MovieService {
 
-    public void getMoviesNowPlaying(final OnCallback callback) {
+    public void getMoviesNowPlaying(int page, final OnCallback callback) {
         final String TAG = "getMoviesNowPlaying";
         String url;
-        if (Locale.getDefault().toString().equals("de_DE"))
-            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
+
+        String lang = Hawk.get(Constant.PREFS_LANGUAGE);
+        if (lang != null)
+            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=" + lang + "&page=" + page;
+        else if (Locale.getDefault().toString().equals("de_DE"))
+            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=" + page;
         else
-            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
+            url = Constant.BASE_URL + "now_playing?api_key=" + Constant.API_TOKEN + "&language=en-US&page=" + page;
 
         Log.d(TAG, "getMovies: " + url);
 
@@ -47,16 +52,17 @@ public class MovieService {
                 Log.d(TAG, "onResponse:resultResponse " + resultResponse);
                 try {
                     JSONObject result1 = new JSONObject(resultResponse);
-                    Log.d(TAG, "onResponse:result1 " + result1);
                     JSONArray result = result1.getJSONArray("results");
 
-                    Log.d(TAG, "onResponse:result " + result);
+                    int totalPage = result1.getInt("total_pages");
+                    Hawk.put(Constant.PREFS_TOTAL_PAGE_NP, totalPage);
+
+                    Log.d(TAG, "onResponse:totalPage " + totalPage);
                     List<Movie> movies = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
-                        Log.d(TAG, "onResponse: for" + result.getJSONObject(i));
                         Movie movie = GsonUtils.fromJSON(result.getJSONObject(i), Movie.class);
-
-                        movies.add(movie);
+                        if (!result.getJSONObject(i).getString("poster_path").equals("null"))
+                            movies.add(movie);
                     }
                     callback.onSuccess(movies);
 
@@ -80,14 +86,16 @@ public class MovieService {
         ArtistApp.getInstance().addToRequestQueue(multipartRequest);
     }
 
-    public void getMoviesUpcoming(final OnCallback callback) {
+    public void getMoviesUpcoming(int page, final OnCallback callback) {
         final String TAG = "getMoviesUpcoming";
-        Log.d(TAG, "getMoviesUpcoming: " + Locale.getDefault());
         String url;
-        if (Locale.getDefault().toString().equals("de_DE"))
-            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
+        String lang = Hawk.get(Constant.PREFS_LANGUAGE);
+        if (lang != null)
+            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=" + lang + "&page=" + page;
+        else if (Locale.getDefault().toString().equals("de_DE"))
+            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=" + page;
         else
-            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
+            url = Constant.BASE_URL + "upcoming?api_key=" + Constant.API_TOKEN + "&language=en-US&page=" + page;
         Log.d(TAG, "getMovies: " + url);
 
         VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.GET, url, new Response.Listener<NetworkResponse>() {
@@ -97,16 +105,15 @@ public class MovieService {
                 Log.d(TAG, "onResponse:resultResponse " + resultResponse);
                 try {
                     JSONObject result1 = new JSONObject(resultResponse);
-                    Log.d(TAG, "onResponse:result1 " + result1);
                     JSONArray result = result1.getJSONArray("results");
-
-                    Log.d(TAG, "onResponse:result " + result);
+                    int totalPage = result1.getInt("total_pages");
+                    Log.d(TAG, "onResponse:totalPage " + totalPage);
+                    Hawk.put(Constant.PREFS_TOTAL_PAGE_U, totalPage);
                     List<Movie> movies = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
-                        Log.d(TAG, "onResponse: for" + result.getJSONObject(i));
                         Movie movie = GsonUtils.fromJSON(result.getJSONObject(i), Movie.class);
-
-                        movies.add(movie);
+                        if (!result.getJSONObject(i).getString("poster_path").equals("null"))
+                            movies.add(movie);
                     }
                     callback.onSuccess(movies);
 
@@ -129,17 +136,18 @@ public class MovieService {
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         ArtistApp.getInstance().addToRequestQueue(multipartRequest);
     }
-
 
     public void getDetailsMovies(String id, final OnCallback callback) {
         final String TAG = "getDetailsMovies";
 
         String url;
-        if (Locale.getDefault().toString().equals("de_DE"))
+        String lang = Hawk.get(Constant.PREFS_LANGUAGE);
+        if (lang != null)
+            url = Constant.BASE_URL + id + "?api_key=" + Constant.API_TOKEN + "&language="+lang+"&page=1";
+        else if (Locale.getDefault().toString().equals("de_DE"))
             url = Constant.BASE_URL + id + "?api_key=" + Constant.API_TOKEN + "&language=de_DE&page=1";
         else
             url = Constant.BASE_URL + id + "?api_key=" + Constant.API_TOKEN + "&language=en-US&page=1";
-
 
         Log.d(TAG, "getMovies: " + url);
 

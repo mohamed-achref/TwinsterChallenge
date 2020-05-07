@@ -13,12 +13,13 @@ import com.google.android.material.tabs.TabLayout;
 import com.khattech.twinsterchallenge.R;
 import com.khattech.twinsterchallenge.adapter.SectionsPagerAdapter;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-    
+
+    private static final String TAG = "HomeFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,11 +29,18 @@ public class HomeFragment extends Fragment {
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getActivity(), getChildFragmentManager());
         ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(sectionsPagerAdapter);
+
         TabLayout tabs = view.findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
 }

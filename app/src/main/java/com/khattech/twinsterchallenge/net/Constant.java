@@ -1,6 +1,8 @@
 package com.khattech.twinsterchallenge.net;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,6 +12,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.TypedValue;
+
+import java.util.Locale;
 
 /**
  * Created by Mohamed Achref on 4/30/20.
@@ -23,6 +27,9 @@ public class Constant {
     public static final String PREFS_USER_CONNECTED = "prefs_user_connected";
     public static final String PREFS_MOVIE = "prefs_movie";
     public static final String PREFS_FAVORITE_MOVIE = "prefs_favorite_movie";
+    public static final String PREFS_TOTAL_PAGE_U = "prefs_total_page_upcoming";
+    public static final String PREFS_TOTAL_PAGE_NP = "prefs_total_page_now_playing";
+    public static final String PREFS_LANGUAGE = "prefs_language";
 
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float pixels) {
@@ -51,4 +58,19 @@ public class Constant {
         Resources r = context.getResources();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
+
+    public static void setLocale(Activity context , String langCode) {
+        Locale locale;
+//        Session session = new Session(context);
+        //Log.e("Lan",session.getLanguage());
+        locale = new Locale(langCode);
+        Configuration config = new Configuration(context.getResources().getConfiguration());
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+
+        context.getBaseContext().getResources().updateConfiguration(config,
+                context.getBaseContext().getResources().getDisplayMetrics());
+    }
+
+
 }

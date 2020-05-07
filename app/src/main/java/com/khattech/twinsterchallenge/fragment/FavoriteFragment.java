@@ -23,26 +23,27 @@ import java.util.ArrayList;
 public class FavoriteFragment extends Fragment {
 
     private static final String TAG = "FavoriteFragment";
-    private ArrayList<Movie> movies;
-
-    private MovieAdapter movieAdapter;
     private RecyclerView rvMovies;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         rvMovies = view.findViewById(R.id.rvMovies);
         rvMovies.setHasFixedSize(true);
 
         rvMovies.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
-        movies = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
 
-        Log.d(TAG, "onCreateView: "+movies);
-
-        movieAdapter = new MovieAdapter(getActivity(), movies,"FavoriteFragment");
-        rvMovies.setAdapter(movieAdapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+        ArrayList<Movie> movies = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
+        MovieAdapter movieAdapter = new MovieAdapter(getActivity(), movies, "FavoriteFragment");
+        rvMovies.setAdapter(movieAdapter);
     }
 }

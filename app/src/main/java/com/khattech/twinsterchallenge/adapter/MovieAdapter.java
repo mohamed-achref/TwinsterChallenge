@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,9 +32,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
     private ArrayList<Movie> itemsList;
     private Context mContext;
     private String parentFrag;
-    private int mLowestPosition = -1;
 
     private ArrayList<Movie> moviesFav;
+    private boolean isClicked = false;
 
     public MovieAdapter(Context context, ArrayList<Movie> itemsList, String parentFrag) {
         this.itemsList = itemsList;
@@ -52,35 +53,32 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
     public void onBindViewHolder(@NonNull final SingleItemRowHolder holder, final int i) {
         Log.d(TAG, "onBindViewHolder: ");
         final Movie movie = itemsList.get(i);
-
-//        if (i > mLowestPosition) {
-//            if (movie != null) {
         moviesFav = Hawk.get(Constant.PREFS_FAVORITE_MOVIE);
-
-        Log.d(TAG, "onBindViewHolder: " + moviesFav);
-        Log.d(TAG, "onBindViewHolder: " + moviesFav.contains(movie));
-
+        isClicked = false;
         if (moviesFav != null && moviesFav.contains(movie)) {
             movie.setFavourite(true);
-            Log.d(TAG, "onBindViewHolder: != null ");
             holder.btnLike.setBackgroundResource(R.drawable.ic_liked);
+        } else if (moviesFav != null && !moviesFav.contains(movie)) {
+            movie.setFavourite(false);
+            holder.btnLike.setBackgroundResource(R.drawable.ic_like);
         }
+
         Glide.with(mContext)
                 .load(Constant.URL_IMAGE + movie.getPoster_path())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.ic_placeholder)
                 .into(holder.itemImage);
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: prod " + movie);
+                if (!isClicked) {
+                    Hawk.put(Constant.PREFS_MOVIE, movie);
+                    Intent intent = new Intent(mContext, DetailsMovieActivity.class);
 
-                Hawk.put(Constant.PREFS_MOVIE, movie);
-                Intent intent = new Intent(mContext, DetailsMovieActivity.class);
-
-                mContext.startActivity(intent);
+                    mContext.startActivity(intent);
+                    isClicked = true;
+                }
             }
         });
 
@@ -107,19 +105,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
 
                     holder.btnLike.setBackgroundResource(R.drawable.ic_like);
 
-                    if (parentFrag.equals("FavoriteFragment")){
+                    if (parentFrag.equals("FavoriteFragment")) {
                         itemsList.remove(i);
                         notifyItemRemoved(i);
                     }
                 }
-
             }
         });
 
-//            }
-
-//            mLowestPosition = i;
-//        }
+        if (!movie.isFavourite() && parentFrag.equals("FavoriteFragment")) {
+            itemsList.remove(i);
+            notifyItemChanged(i);
+        }
     }
 
     @Override
@@ -127,16 +124,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.SingleItemRo
         return (null != itemsList ? itemsList.size() : 0);
     }
 
-    public class SingleItemRowHolder extends RecyclerView.ViewHolder {
+    class SingleItemRowHolder extends RecyclerView.ViewHolder {
 
         private ImageView itemImage;
         private Button btnLike;
+        private LinearLayout linearItemMovie;
 
         SingleItemRowHolder(View view) {
             super(view);
 
             this.itemImage = view.findViewById(R.id.itemImage);
             this.btnLike = view.findViewById(R.id.btnLike);
+            this.linearItemMovie = view.findViewById(R.id.linearItemMovie);
 
         }
     }

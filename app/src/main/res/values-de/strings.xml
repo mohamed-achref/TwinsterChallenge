@@ -15,4 +15,16 @@
     <string name="message_profile">Ihr Profil wurde aktualisiert</string>
     <string name="message_share">Genieße diesen Film</string>
 
+
+    <string name="add_photo">Bild hinzufügen!</string>
+    <string name="take_picture"> Machen Sie ein Bild </string>
+    <string name="choose_galery"> Wählen Sie aus der Galerie </string>
+    <string name="cancel"> Abbrechen </string>
+    <string name="ok">ok</string>
+    <string name="selectfile"> Wählen Sie Datei </string>
+    <string name="bitmap_saved_at"> Bitmap gespeichert unter </string>
+
+    <string name="exit_confirm">Sie sind sicher, dass Sie beenden wollen?</string>
+    <string name="warning">Warnung!</string>
+    <string name="menu_language">Sprache wählen</string>
 </resources>

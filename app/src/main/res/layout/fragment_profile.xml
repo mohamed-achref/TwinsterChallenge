@@ -26,6 +26,7 @@
                 android:id="@+id/ivImage"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/profil_img2" />
 
         </LinearLayout>

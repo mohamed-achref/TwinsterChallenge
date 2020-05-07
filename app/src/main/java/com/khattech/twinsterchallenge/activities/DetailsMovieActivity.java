@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -42,7 +43,6 @@ public class DetailsMovieActivity extends AppCompatActivity {
     private TextView tvDescription;
 
     private ImageView image;
-    private FrameLayout icRightButton;
     private Button btnLike;
     private ArrayList<Movie> moviesFav;
 
@@ -55,8 +55,8 @@ public class DetailsMovieActivity extends AppCompatActivity {
         tvDetails = findViewById(R.id.tvDetails);
         tvDescription = findViewById(R.id.tvDescription);
         image = findViewById(R.id.image);
-        icRightButton = findViewById(R.id.icRightButton);
         btnLike = findViewById(R.id.btnLike);
+        FrameLayout icRightButton = findViewById(R.id.icRightButton);
 
         final Movie movie = Hawk.get(Constant.PREFS_MOVIE);
 
@@ -100,7 +100,6 @@ public class DetailsMovieActivity extends AppCompatActivity {
                 } else {
                     moviesFav.remove(movie);
                     Hawk.put(Constant.PREFS_FAVORITE_MOVIE, moviesFav);
-
                     btnLike.setBackgroundResource(R.drawable.ic_like);
                 }
 
@@ -148,6 +147,9 @@ public class DetailsMovieActivity extends AppCompatActivity {
                 Log.d(TAG, "onError: " + errorCode);
             }
         });
+
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     static public void shareImage(String url, final Context context) {
@@ -189,5 +191,8 @@ public class DetailsMovieActivity extends AppCompatActivity {
     public void onBack(View view) {
         finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
     }
+
+
 }

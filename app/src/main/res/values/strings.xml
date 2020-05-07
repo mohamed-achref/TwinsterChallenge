@@ -15,8 +15,22 @@
     <string name="email">Email</string>
     <string name="menu_favorite">Favorite</string>
     <string name="menu_profile">Profile</string>
+    <string name="menu_language">Choose language</string>
     <string name="update">Update</string>
     <string name="message_profile">Your profile has been updated</string>
     <string name="message_share">Enjoy this movie</string>
 
+
+    <string name="add_photo">Add a picture!</string>
+    <string name="take_picture">Take a picture</string>
+    <string name="choose_galery">Choose from the gallery</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="selectfile">Select File</string>
+    <string name="bitmap_saved_at">Bitmap Saved at </string>
+    <string name="exit_confirm">Are you sure you want to exit?</string>
+    <string name="warning">Warning!</string>
+
+    <string name="lang_1" translatable="false">English</string>
+    <string name="lang_2" translatable="false">German</string>
 </resources>
