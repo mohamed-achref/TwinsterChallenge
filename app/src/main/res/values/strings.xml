@@ -33,4 +33,5 @@
 
     <string name="lang_1" translatable="false">English</string>
     <string name="lang_2" translatable="false">German</string>
+    <string name="menu_edit">Edit</string>
 </resources>

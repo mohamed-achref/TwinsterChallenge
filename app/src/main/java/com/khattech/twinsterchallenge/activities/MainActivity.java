@@ -45,6 +45,7 @@ import com.khattech.twinsterchallenge.R;
 import com.khattech.twinsterchallenge.fragment.FavoriteFragment;
 import com.khattech.twinsterchallenge.fragment.HomeFragment;
 import com.khattech.twinsterchallenge.fragment.ProfileFragment;
+import com.khattech.twinsterchallenge.fragment.ProfileUpdateFragment;
 import com.khattech.twinsterchallenge.models.User;
 import com.khattech.twinsterchallenge.net.Constant;
 import com.orhanobut.hawk.Hawk;
@@ -366,14 +367,18 @@ public class MainActivity extends AppCompatActivity {
         Hawk.put(Constant.PREFS_USER_CONNECTED, user);
         int nbFrag = MainActivity.this.getSupportFragmentManager().getFragments().size() - 1;
 
-        Log.d(TAG, "cropImage:& " + (MainActivity.this.getSupportFragmentManager().getFragments().get(nbFrag).equals(ProfileFragment.class)));
-        Log.d(TAG, "cropImage:é " + (MainActivity.this.getSupportFragmentManager().getFragments().get(nbFrag) instanceof ProfileFragment));
 
         if (MainActivity.this.getSupportFragmentManager().getFragments().get(nbFrag) instanceof ProfileFragment)
             Glide.with(this)
                     .load(res) // Uri of the picture
                     .apply(RequestOptions.circleCropTransform())
                     .into(((ProfileFragment) MainActivity.this.getSupportFragmentManager().getFragments().get(nbFrag)).imageView);
+
+        if (MainActivity.this.getSupportFragmentManager().getFragments().get(nbFrag) instanceof ProfileUpdateFragment)
+            Glide.with(this)
+                    .load(res) // Uri of the picture
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(((ProfileUpdateFragment) MainActivity.this.getSupportFragmentManager().getFragments().get(nbFrag)).imageView);
 
     }
 
